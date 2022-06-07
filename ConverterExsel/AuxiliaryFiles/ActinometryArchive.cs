@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConverterExsel.AuxiliaryFiles
 {
-    public class ArchivePob
+    public class ActinometryArchive
     {
         public DateTime Time { get; set; }
 
