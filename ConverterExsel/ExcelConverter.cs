@@ -9,7 +9,7 @@ namespace ConverterExsel
 {
     public class ExcelConverter
     {
-        public string Converter(string pathBegin, DateTime dateBegin, DateTime dateEnd, string parsingFormat, string pathEnd, string name)
+        public string Converter(string pathBegin, DateTime dateBegin, DateTime dateEnd, string parsingFormat, string pathEnd, string name, string stationIndex = "M05")
         {
             string answer = null;
 
@@ -19,7 +19,7 @@ namespace ConverterExsel
                 case "ArchivePob":
                     {
 
-                        Dictionary<DateTime, string> dataFile = Functions.GetSuitableData(pathBegin, dateBegin, dateEnd);
+                        Dictionary<DateTime, string> dataFile = Functions.GetSuitableData(pathBegin, dateBegin, dateEnd, parsingFormat);
                         List<AuxiliaryFiles.ArchivePob> myCollection = new List<AuxiliaryFiles.ArchivePob>();
                         foreach (var file in dataFile)
                         {
@@ -100,20 +100,67 @@ namespace ConverterExsel
                                 exsel.Save();
                             }
                         }
-                        answer = "Convertation sucsess";
+                        answer = "Convertation sucsess2";
                     }
 
                     break;
 
 
                 case "ArchiveXPob":
+                    {
+                        Dictionary<DateTime, string> dataFile = Functions.GetSuitableData(pathBegin, dateBegin, dateEnd, parsingFormat);
+                        List<AuxiliaryFiles.ArchiveXPob> myCollection = new List<AuxiliaryFiles.ArchiveXPob>();
+                        foreach (var file in dataFile)
+                        {
+                            var fileData = file.Value.Split(new char[] { '\n' });
+                            foreach (string lineOfFile in fileData)
+                            {
+                                if (lineOfFile != "")
+                                {
+                                    AuxiliaryFiles.ArchiveXPob archiveXPobe = new AuxiliaryFiles.ArchiveXPob();
+                                    var words = lineOfFile.Split(new char[] { ' ' });
+                                    //for(int i = 0; i<words.Length;i++)
+                                    //{
+                                    //    if (i == 2)
+                                    //    Console.WriteLine(words[i].Substring(1, words[2].Length - 2));
+                                    //}
+                                    if (words[2].Substring(1, words[2].Length - 2) == "1[S]")
+                                    {
+                                        var time = words[1].Substring(1, words[1].Length - 3).Split(new char[] { ':' });
+                                        archiveXPobe.Time = file.Key.AddHours(Convert.ToInt32(time[0])).AddMinutes(Convert.ToInt32(time[1])).AddSeconds(Convert.ToInt32(time[2]));
+                                        archiveXPobe.Radiation = words[3];
+                                        archiveXPobe.Millivolt = words[4].Substring(0, words[4].Length - 2);
+                                        myCollection.Add(archiveXPobe);
+                                    }
+                                }
+                            }
+
+                        }
+                        using (AuxiliaryFiles.ExcelHelper exsel = new AuxiliaryFiles.ExcelHelper())
+                        {
+                            if (exsel.Open(filePath: Path.Combine(pathEnd, name + ".xlsx")))
+                            {
+                                exsel.Set(column: "A", row: 1, data: "Date Time");
+                                exsel.Set(column: "B", row: 1, data: "Radiation, Вт/м2");
+                                exsel.Set(column: "C", row: 1, data: "Millivolt, Вт/м2");
+                                for (int i = 0; i < myCollection.Count; i++)
+                                {
+                                    exsel.Set(column: "A", row: i + 2, data: myCollection[i].Time);
+                                    exsel.Set(column: "B", row: i + 2, data: myCollection[i].Radiation);
+                                    exsel.Set(column: "C", row: i + 2, data: myCollection[i].Millivolt);
+                                }
+                                exsel.Save();
+                            }
+                        }
+                        answer = "Convertation sucsess3";
+                    }
 
                     break;
 
 
                 case "ActinometryArchive":
                     {
-                        Dictionary<DateTime, string> dataFile = Functions.GetSuitableData(pathBegin, dateBegin, dateEnd);
+                        Dictionary<DateTime, string> dataFile = Functions.GetSuitableData(pathBegin, dateBegin, dateEnd, parsingFormat);
                         List<AuxiliaryFiles.ActinometryArchive> myCollection = new List<AuxiliaryFiles.ActinometryArchive>();
                         foreach (var file in dataFile)
                         {
@@ -138,7 +185,7 @@ namespace ConverterExsel
                             if (exsel.Open(filePath: Path.Combine(pathEnd, name + ".xlsx")))
                             {
                                 exsel.Set(column: "A", row: 1, data: "Date Time");
-                                exsel.Set(column: "B", row: 1, data: "RadiationS, Вт/м2");
+                                exsel.Set(column: "B", row: 1, data: "Radiation, Вт/м2");
                                 exsel.Set(column: "C", row: 1, data: "Millivolt, мВ");
                                 for (int i = 0; i < myCollection.Count; i++)
                                 {
@@ -149,18 +196,25 @@ namespace ConverterExsel
                                 exsel.Save();
                             }
                         }
-                        answer = "Convertation sucsess";
+                        answer = "Convertation sucsess1";
                     }
                     break;
 
 
                 case "MINpel":
                 case "Hpel":
+                    {
+                        Dictionary<DateTime, string> dataFile = Functions.GetSuitableData(pathBegin, dateBegin, dateEnd, parsingFormat, stationIndex);
 
+                    }
                     break;
 
 
                 case "VODpel":
+                    {
+                        Dictionary<DateTime, string> dataFile = Functions.GetSuitableData(pathBegin, dateBegin, dateEnd, parsingFormat, stationIndex);
+
+                    }
 
                     break;
 
