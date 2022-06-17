@@ -44,6 +44,8 @@
     <Compile Include="AuxiliaryFiles\ActinometryArchive.cs" />
     <Compile Include="AuxiliaryFiles\ArchivePob.cs" />
     <Compile Include="AuxiliaryFiles\ArchiveXPob.cs" />
+    <Compile Include="AuxiliaryFiles\HpelMINpel.cs" />
+    <Compile Include="AuxiliaryFiles\VODpel.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="ExcelConverter.cs" />
     <Compile Include="AuxiliaryFiles\ExcelHelper.cs" />

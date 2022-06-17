@@ -51,8 +51,7 @@ namespace ConverterExsel.AuxiliaryFiles
                 _workbook.Save();
             }
         }
-
-        internal bool Set(string column, int row, object data)
+        internal bool Set(int column, int row, object data)
         {
             try
             {

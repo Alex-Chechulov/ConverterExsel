@@ -22,8 +22,14 @@ namespace TestConverter
             //string test_ansver_3 = test.Converter("Port 12 - Датчики цифровые  (ZONE)", new DateTime(2022, 05, 06), new DateTime(2022, 05, 12)/*DateTime.UtcNow*/, "ArchiveXPob", "D:\\Work_25\\Projects_VS\\C#\\ConverterExsel", "test_3");
             //Console.WriteLine(test_ansver_3);
 
-            string test_ansver_4 = test.Converter("Port 12 - Датчики цифровые  (ZONE)", new DateTime(2022, 05, 06), new DateTime(2022, 05, 13)/*DateTime.UtcNow*/, "MINpel", "D:\\Work_25\\Projects_VS\\C#\\ConverterExsel", "test_4", "M05");
-            Console.WriteLine(test_ansver_4);
+            //string test_ansver_4 = test.Converter("Port 8, Subchannel 1 - Балансомер (СФ-08)", new DateTime(2022, 05, 06), new DateTime(2022, 05, 13)/*DateTime.UtcNow*/, "Hpel", "D:\\Work_25\\Projects_VS\\C#\\ConverterExsel", "test_4", "M05");
+            //Console.WriteLine(test_ansver_4);
+
+            //string test_ansver_5 = test.Converter("Port 8, Subchannel 1 - Балансомер (СФ-08)", new DateTime(2022, 05, 06), new DateTime(2022, 05, 13)/*DateTime.UtcNow*/, "MINpel", "D:\\Work_25\\Projects_VS\\C#\\ConverterExsel", "test_5", "M05");
+            //Console.WriteLine(test_ansver_5);
+
+            string test_ansver_6 = test.Converter("Port 8, Subchannel 1 - Балансомер (СФ-08)", new DateTime(2022, 05, 06), new DateTime(2022, 05, 13)/*DateTime.UtcNow*/, "VODpel", "D:\\Work_25\\Projects_VS\\C#\\ConverterExsel", "test_6", "M05");
+            Console.WriteLine(test_ansver_6);
 
             Console.ReadLine();
         }
