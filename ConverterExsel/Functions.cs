@@ -9,7 +9,7 @@ namespace ConverterExsel
 {
     class Functions
     {
-        public static Dictionary<DateTime, string> GetSuitableData(string pathBegin, DateTime dateBegin, DateTime dateEnd, string parsingFormat, string stationIndex = "M05")
+        public static Dictionary<DateTime, string> GetSuitableData(string pathBegin, DateTime dateBegin, DateTime dateEnd, string parsingFormat, string stationIndex = "M05", string additionalParsingFormat = "")
         {
             Dictionary<DateTime, string> allRelevantData = new Dictionary<DateTime, string>();
 
@@ -64,6 +64,7 @@ namespace ConverterExsel
                 case "VODpel":
                     {
                         string pathToFolder = Directory.GetCurrentDirectory() + "\\DATA\\" + pathBegin + "\\";
+                        int i = 1;
                         foreach (string path in Directory.GetDirectories(pathToFolder))
                         {
                             string folderName = path.Replace(pathToFolder, "");
@@ -79,9 +80,14 @@ namespace ConverterExsel
                                         //DateTime dataFromName = new DateTime(Convert.ToInt32(fileName[0]), Convert.ToInt32(fileName[1]), Convert.ToInt32(fileName[2]));
                                         //if (dataFromName >= dateBegin && dataFromName <= dateEnd)
                                         //{
-
-                                            StreamReader reader = new StreamReader(pathToFiles);
-                                            allRelevantData.Add(folderData, reader.ReadToEnd());
+                                        
+                                        StreamReader reader = new StreamReader(pathToFiles);
+                                        if(allRelevantData.ContainsKey(folderData))
+                                        {
+                                            folderData = folderData.AddMilliseconds(i);
+                                            i++;
+                                        }
+                                        allRelevantData.Add(folderData, reader.ReadToEnd());
                                         //}
                                     }
                                 }
