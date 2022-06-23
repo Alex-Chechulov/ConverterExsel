@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace ConverterExsel
@@ -13,7 +10,7 @@ namespace ConverterExsel
         {
             string answer = null;
 
-   
+
             switch (parsingFormat)
             {
                 case "ArchivePob":
@@ -36,10 +33,10 @@ namespace ConverterExsel
                                     words[2] = words[2].Substring(1);
                                     for (int i = 0; i < words.Length; i++)
                                     {
-                                        switch(words[i].Substring(0, words[i].Length - 1))
+                                        switch (words[i].Substring(0, words[i].Length - 1))
                                         {
                                             case "RadiationS":
-                                                archivePob.RadiationS = words[i+1].Substring(0, words[i + 1].Length - (i == (words.Length - 2) ? 2 : 1));
+                                                archivePob.RadiationS = words[i + 1].Substring(0, words[i + 1].Length - (i == (words.Length - 2) ? 2 : 1));
                                                 break;
                                             case "RadiationD":
                                                 archivePob.RadiationD = words[i + 1].Substring(0, words[i + 1].Length - (i == (words.Length - 2) ? 2 : 1));
@@ -120,7 +117,7 @@ namespace ConverterExsel
                                     AuxiliaryFiles.ArchiveXPob archiveXPobe = new AuxiliaryFiles.ArchiveXPob();
                                     var words = lineOfFile.Split(new char[] { ' ' });
                                     //if (words[2].Substring(1, words[2].Length - 2) == "1[S]")
-                                    if(words[2].Contains("1["))
+                                    if (words[2].Contains("1["))
                                     {
                                         var time = words[1].Substring(1, words[1].Length - 3).Split(new char[] { ':' });
                                         archiveXPobe.Time = file.Key.AddHours(Convert.ToInt32(time[0])).AddMinutes(Convert.ToInt32(time[1])).AddSeconds(Convert.ToInt32(time[2]));
@@ -225,7 +222,7 @@ namespace ConverterExsel
                                     //        Console.WriteLine(words[i]/*.Substring(1, words[2].Length - 2)*/);
                                     //}
                                     //Console.WriteLine("\nnext\n");
-                                    if (additionalParsingFormat == "ActinometryArchive"|| additionalParsingFormat == "ArchiveXPob")
+                                    if (additionalParsingFormat == "ActinometryArchive" || additionalParsingFormat == "ArchiveXPob")
                                     {
                                         AuxiliaryFiles.ActinometryArchive HpelMINpel = new AuxiliaryFiles.ActinometryArchive();
                                         var words = lineOfFile.Split(new char[] { ' ', ';' });
@@ -235,7 +232,8 @@ namespace ConverterExsel
                                         {
                                             HpelMINpel.Radiation = words[3];
                                             HpelMINpel.Millivolt = words[5];
-                                        } else
+                                        }
+                                        else
                                         {
                                             HpelMINpel.Radiation = words[2];
                                             HpelMINpel.Millivolt = words[3];
@@ -272,15 +270,15 @@ namespace ConverterExsel
                         }
                         using (AuxiliaryFiles.ExcelHelper exsel = new AuxiliaryFiles.ExcelHelper())
                         {
-                            if (exsel.Open(filePath: Path.Combine(pathEnd, name + ".xlsx"))&& myCollection[0] is AuxiliaryFiles.ActinometryArchive)
+                            if (exsel.Open(filePath: Path.Combine(pathEnd, name + ".xlsx")) && myCollection[0] is AuxiliaryFiles.ActinometryArchive)
                             {
                                 exsel.Set(column: 1, row: 1, data: "Date Time");
                                 exsel.Set(column: 2, row: 1, data: "RadiationD, Вт/м2");
                                 exsel.Set(column: 3, row: 1, data: "Millivolt, мВ");
-                                
+
                                 for (int i = 0; i < myCollection.Count; i++)
                                 {
-                                    if(myCollection[i] is AuxiliaryFiles.ActinometryArchive aee)
+                                    if (myCollection[i] is AuxiliaryFiles.ActinometryArchive aee)
                                     {
                                         exsel.Set(column: 1, row: i + 2, data: aee.Time);
                                         exsel.Set(column: 2, row: i + 2, data: aee.Radiation);
@@ -350,7 +348,7 @@ namespace ConverterExsel
                             int day = 0, column = 1;
                             foreach (string lineOfFile in fileData)
                             {
-                                if (System.Text.RegularExpressions.Regex.IsMatch(lineOfFile, @"[a-zA-Z]{1,3}\r",System.Text.RegularExpressions.RegexOptions.Compiled))
+                                if (System.Text.RegularExpressions.Regex.IsMatch(lineOfFile, @"[a-zA-Z]{1,3}\r", System.Text.RegularExpressions.RegexOptions.Compiled))
                                 {
                                     day = 0;
                                     column++;
