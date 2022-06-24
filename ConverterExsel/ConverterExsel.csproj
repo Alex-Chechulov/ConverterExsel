@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +51,7 @@
     <Compile Include="AuxiliaryFiles\ActinometryArchive.cs" />
     <Compile Include="AuxiliaryFiles\ArchivePob.cs" />
     <Compile Include="AuxiliaryFiles\ArchiveXPob.cs" />
+    <Compile Include="PDFConverter.cs" />
     <Compile Include="AuxiliaryFiles\Pob_HpelMINpel.cs" />
     <Compile Include="AuxiliaryFiles\VODpel.cs" />
     <Compile Include="Functions.cs" />
